@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Sign In</title>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="325999999039-ru7l7uqia75870snslp9j42h87dh4bvd.apps.googleusercontent.com">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+</head>
+<body>
+    <h1>Google Sign In</h1>
+    <br>
+    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+    <br>
+    <button type="button" onclick="signOut();" class="btn btn-danger">Sign Out</button>
+    <script>
+        function onSignIn(googleUser) {
+          // Useful data for your client-side scripts:
+          var profile = googleUser.getBasicProfile();
+          console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+          console.log('Full Name: ' + profile.getName());
+          console.log('Given Name: ' + profile.getGivenName());
+          console.log('Family Name: ' + profile.getFamilyName());
+          console.log("Image URL: " + profile.getImageUrl());
+          console.log("Email: " + profile.getEmail());
+
+          
+
+          // The ID token you need to pass to your backend:
+          var id_token = googleUser.getAuthResponse().id_token;
+          console.log("ID Token: " + id_token);
+
+          
+        }
+
+
+  function signOut() {
+    if(confirm("Are you sure to signout?")){
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+            $("#loginDetails").hide();
+            $("#loaderIcon").hide('fast');
+            $("#g-signin2").show('fast');
+        });
+        auth2.disconnect();
+        
+    }}
+      </script>
+
+</body>
+</html>
